@@ -53,6 +53,23 @@ app.put('/user/:id', (req, res) => {
     }
 })
 
+// DELETE Request -- Deleting a User
+app.delete('/user/:id', (req, res) => {
+    try {
+        const indexToBeDeleted = users.findIndex((u) => u.id === Number(req.params.id));
+        if (indexToBeDeleted !== -1) {
+            users.splice(indexToBeDeleted, 1);
+            res.status(201).send({ message: "User deleted successfully!" });
+        }
+        else {
+            res.status(404).send({ message: "User Not Found!" });
+        }
+    } catch (error) {
+        res.status(403).send({ message: error.message });
+    }
+
+})
+
 app.listen(PORT, (req, res) => {
     console.log(`The Server is listening at PORT ${PORT}`);
 })
