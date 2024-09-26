@@ -24,13 +24,33 @@ const users = [
     },
 ]
 
+// GET Request -- Fetching all users
 app.get('/', (req, res) => {
     res.status(201).send({ Users: users });
 })
 
+// POST Request -- Adding new users
 app.post('/user', (req, res) => {
     users.push({ id: users.length + 1, ...req.body });
     res.status(201).send({ message: "User addedd successfully!" });
+})
+
+
+// PUT Request -- Updating a User
+app.put('/user/:id', (req, res) => {
+    try {
+        const indexToBeUpdated = users.findIndex((u) => u.id === Number(req.params.id));
+        console.log("indexToBeUpdated ---->", indexToBeUpdated);
+        if (indexToBeUpdated !== -1) {
+            users.splice(indexToBeUpdated, 1, { id: req.params.id, ...req.body });
+        }
+        else {
+            res.status(404).send({ message: "User Not Found!" });
+        }
+
+    } catch (error) {
+        res.status(403).send({ message: error.message });
+    }
 })
 
 app.listen(PORT, (req, res) => {
