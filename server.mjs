@@ -3,6 +3,9 @@ const PORT = 8000;
 
 const app = express();
 
+// middleware for JSON
+app.use(express.json());
+
 const users = [
     {
         id: 1,
@@ -21,8 +24,12 @@ const users = [
     },
 ]
 
-app.get('', (req, res) => {
-    res.status(201).send({Users: users });
+app.get('/', (req, res) => {
+    res.status(201).send({ Users: users });
+})
+app.post('/user', (req, res) => {
+    users.push({ id: users.length + 1, ...req.body });
+    res.status(201).send({message:"User Added Successfully!"})
 })
 
 app.listen(PORT, (req, res) => {
