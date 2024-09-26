@@ -27,9 +27,10 @@ const users = [
 app.get('/', (req, res) => {
     res.status(201).send({ Users: users });
 })
+
 app.post('/user', (req, res) => {
     users.push({ id: users.length + 1, ...req.body });
-    res.status(201).send({message:"User Added Successfully!"})
+    res.status(201).send({ message: "User addedd successfully!" });
 })
 
 app.listen(PORT, (req, res) => {
